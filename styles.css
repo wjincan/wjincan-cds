@@ -1,0 +1,119 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.wheel-container {
+    position: relative;
+    width: 90vmin;
+    height: 90vmin;
+    max-width: 400px;
+    max-height: 400px;
+    margin-bottom: 20px;
+}
+
+.wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* 标准八分之一扇形 */
+.segment {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    transform-origin: bottom right;
+    transform: rotate(calc(45deg * var(--i)));
+    background: var(--color);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    transition: filter 0.3s, transform 0.3s;
+}
+
+/* 文字水平居中 */
+.segment .text {
+    position: absolute;
+    left: 75%;
+    top: 35%;
+    transform: 
+        translate(-50%, -50%) 
+        rotate(calc(-45deg * var(--i) - 22.5deg));
+    font-size: 4vmin;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    width: 80px;
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: color 0.3s, font-weight 0.3s;
+}
+
+/* 高亮效果增强 */
+.segment.active {
+    filter: brightness(1.5) drop-shadow(0 0 20px rgba(255,255,255,0.8));
+    transform: rotate(calc(45deg * var(--i))) scale(1.05); /* 轻微放大 */
+    z-index: 1;
+}
+
+/* 选中文字改为大红色 */
+.segment.active .text {
+    color: #ff0000; /* 大红色 */
+    font-weight: 700;
+}
+
+#spin-button {
+    padding: 12px 35px;
+    font-size: 4vmin;
+    font-weight: 600;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 
+        transform 0.2s,
+        background 0.3s;
+}
+
+#spin-button:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+}
+
+#spin-button:active {
+    transform: translateY(1px);
+}
+
+#spin-button:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .wheel-container {
+        width: 80vmin;
+        height: 80vmin;
+    }
+
+    .segment .text {
+        font-size: 3.5vmin;
+    }
+
+    #spin-button {
+        font-size: 3.5vmin;
+        padding: 10px 25px;
+    }
+}
